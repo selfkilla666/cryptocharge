@@ -16,13 +16,13 @@ class ExchangeAPI:
 # Класс для Binance
 class BinanceAPI(ExchangeAPI):
     def __init__(self):
-        super().__init__("Binance", "https://api.binance.com/api/v3/ticker/price")
+        super().__init__("Binance", "https://api.binance.com/api/v3/ticker/price?symbol=")
 
     def get_price(self, pair):
         # Преобразование пары в формат Binance, например, BTC/USD -> BTCUSDT
         symbol = pair.replace("/", "").upper()  # Формируем нужный формат пары
         try:
-            response = requests.get(self.base_url, params={"symbol": symbol})
+            response = requests.get(self.base_url + symbol)
             if response.status_code == 200:
                 data = response.json()
                 return float(data["price"])
